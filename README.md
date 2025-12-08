@@ -1,27 +1,45 @@
-# Python Portfolio Website Generator
+import os
 
-A simple and powerful **Python-based Portfolio Website Generator** that creates a complete personal portfolio website (HTML + CSS) from user input.
+# Create output directory
+os.makedirs("output", exist_ok=True)
 
-You enter your details once, and the program automatically generates:
+# -------------------------
+# Collect user information
+# -------------------------
+print("\n=== Portfolio Website Generator ===\n")
 
-- ✔ `index.html` (Your portfolio website)
-- ✔ `style.css` (Clean and responsive styling)
-- ✔ Organized sections (About, Skills, Projects, Contact)
+name = input("Enter your full name: ")
+bio = input("Write a short bio about yourself: ")
+skills = input("Enter your skills (comma-separated): ")
+projects = input("Enter your projects (comma-separated): ")
+email = input("Enter your contact email: ")
+linkedin = input("Enter your LinkedIn URL: ")
+github = input("Enter your GitHub URL: ")
 
-Perfect for beginners who want a portfolio without learning HTML/CSS.
+# Convert comma input to list
+skills_list = [s.strip() for s in skills.split(",")]
+projects_list = [p.strip() for p in projects.split(",")]
 
----
+# -------------------------
+# Read HTML template
+# -------------------------
+with open("template.html", "r") as file:
+    template = file.read()
 
-## Features
+# Replace placeholders
+html_output = template.replace("{{NAME}}", name)\
+                      .replace("{{BIO}}", bio)\
+                      .replace("{{EMAIL}}", email)\
+                      .replace("{{LINKEDIN}}", linkedin)\
+                      .replace("{{GITHUB}}", github)\
+                      .replace("{{SKILLS}}", "".join(f"<li>{s}</li>" for s in skills_list))\
+                      .replace("{{PROJECTS}}", "".join(f"<li>{p}</li>" for p in projects_list))
 
-- Collects user information from the terminal
-- Automatically generates a professional portfolio website
-- Clean and modern HTML/CSS template
-- Beginner-friendly Python code
-- No external libraries needed
-- Fully customizable website
+# -------------------------
+# Save generated HTML
+# -------------------------
+with open("output/index.html", "w") as file:
+    file.write(html_output)
 
----
-
-## Project Structure
-
+print("\n🎉 Portfolio website generated successfully!")
+print("📂 Open: output/index.html in your browser.\n")
