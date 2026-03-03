@@ -41,5 +41,5 @@ html_output = template.replace("{{NAME}}", name)\
 with open("output/index.html", "w") as file:
     file.write(html_output)
 
-print("\n🎉 Portfolio website generated successfully!")
-print("📂 Open: output/index.html in your browser.\n")
+print("\n Portfolio website generated successfully!")
+print(" Open: output/index.html in your browser.\n")
